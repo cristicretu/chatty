@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "type": "module",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "dev": "nodemon --watch ./index.js"
+    "dev": "nodemon --watch ./app.js"
   },
   "keywords": [],
   "author": "",

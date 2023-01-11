@@ -17,9 +17,9 @@ app.set('view engine', 'handlebars')
 app.use('/public', express.static('public'))
 
 app.get('/', (req, res) => {
-  res.render('index.handlebars')
+  res.render('index')
 })
 
-server.listen('8000', () => {
+app.listen('8000', () => {
   console.log("Server listening on Port 8000")
 })
