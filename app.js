@@ -9,9 +9,13 @@ const server = http.createServer(app)
 const io = new Server(server)
 
 // view engine for handlebars
+
+//! Don't use a db for this project
+//! save everything in memory, a restart will clear everything
+
+let onlineUsers = {}
 io.on('connection', (socket) => {
-  new_user(io, socket)
-  console.log('new user connected 🙋')
+  new_user(io, socket, onlineUsers)
 })
 app.engine('handlebars', engine())
 app.set('view engine', 'handlebars')
