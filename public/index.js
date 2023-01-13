@@ -17,6 +17,7 @@ $(document).ready(() => {
   });
 
   $("#send-chat-btn").click((e) => {
+    console.log("aaa")
     e.preventDefault();
     let msg = $("#chat-input").val();
     if (msg.length > 0) {
@@ -25,6 +26,18 @@ $(document).ready(() => {
         message: msg,
       });
       $("#chat-input").val("");
+    }
+  });
+
+  $("#logout-btn").click((e) => {
+    e.preventDefault();
+    socket.emit('logout');
+  });
+
+  socket.on('logout', (username) => {
+    // reload the page
+    if (currentUser === username) {
+      window.location.reload();
     }
   });
 

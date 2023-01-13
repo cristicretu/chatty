@@ -23,4 +23,11 @@ export function new_user(io, socket, onlineUsers) {
     delete onlineUsers[socket.username];
     io.emit('user has left', onlineUsers);
   });
+
+  socket.on('logout', () => {
+    console.log(`👋 ${socket.username} has left the chat! 👋`);
+    io.emit('logout', socket.username)
+    delete onlineUsers[socket.username];
+    io.emit('user has left', onlineUsers);
+  });
 }
