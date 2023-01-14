@@ -17,7 +17,6 @@ $(document).ready(() => {
   });
 
   $("#send-chat-btn").click((e) => {
-    console.log("aaa")
     e.preventDefault();
     let msg = $("#chat-input").val();
     if (msg.length > 0) {
@@ -31,10 +30,20 @@ $(document).ready(() => {
 
   $("#logout-btn").click((e) => {
     e.preventDefault();
-    socket.emit('logout');
+    socket.emit("logout");
   });
 
-  socket.on('logout', (username) => {
+  $("#new-channel-btn").click(() => {
+    let newChannel = $("#new-channel-input").val();
+
+    if (newChannel.length > 0) {
+      // Emit the new channel to the server
+      socket.emit("new channel", newChannel);
+      $("#new-channel-input").val("");
+    }
+  });
+
+  socket.on("logout", (username) => {
     // reload the page
     if (currentUser === username) {
       window.location.reload();
@@ -55,13 +64,13 @@ $(document).ready(() => {
     `);
   });
 
-  socket.on('get online users', (onlineUsers) => {
+  socket.on("get online users", (onlineUsers) => {
     for (username in onlineUsers) {
       $(".users-online").append(`<div class="user-online">${username}</div>`);
     }
   });
 
-  socket.on('user has left', (onlineUsers) => {
+  socket.on("user has left", (onlineUsers) => {
     $(".users-online").empty();
     for (username in onlineUsers) {
       $(".users-online").append(`<div class="user-online">${username}</div>`);
