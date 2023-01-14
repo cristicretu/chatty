@@ -14,8 +14,9 @@ const io = new Server(server)
 //! save everything in memory, a restart will clear everything
 
 let onlineUsers = {}
+let channels = { "General": [] }
 io.on('connection', (socket) => {
-  new_user(io, socket, onlineUsers)
+  new_user(io, socket, onlineUsers, channels)
 })
 app.engine('handlebars', engine())
 app.set('view engine', 'handlebars')
