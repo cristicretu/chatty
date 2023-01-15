@@ -8,10 +8,10 @@ export function new_user(io, socket, onlineUsers, channels) {
     io.emit("new user", username);
   })
 
-  socket.on('new message', ({ sender, message }) => {
+  socket.on('new message', ({ sender, message, channel }) => {
     console.log(`${sender}: ${message}`);
     //Send the message to all clients currently connected
-    io.emit("new message", { sender, message });
+    io.to(channel).emit("new message", { sender, message, channel });
   })
 
   socket.on('get online users', () => {
