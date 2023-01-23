@@ -10,12 +10,18 @@ export function new_user(io, socket, onlineUsers, channels) {
 
   socket.on('new message', ({ sender, message, channel }) => {
     console.log(`${sender}: ${message}`);
+    //Save the message to the channel
+    channels[channel].push({ sender, message });
     //Send the message to all clients currently connected
     io.to(channel).emit("new message", { sender, message, channel });
   })
 
   socket.on('get online users', () => {
     io.emit("get online users", onlineUsers);
+  })
+
+  socket.on('get all channels', () => {
+    io.emit("get all channels", channels);
   })
 
   socket.on('disconnect', () => {
@@ -32,7 +38,9 @@ export function new_user(io, socket, onlineUsers, channels) {
   });
 
   socket.on('new channel', (newChannel) => {
-    channels[newChannel] = [];
+    // Save the new channel to our channels object
+    channels[newChannel] = [{ sender: "Chat Bot", message: `Welcome to ${newChannel}` }]
+
    socket.join(newChannel);
     io.emit('new channel', newChannel);
 

@@ -4,6 +4,7 @@ $(document).ready(() => {
   let currentUser;
 
   socket.emit("get online users");
+  socket.emit("get all channels");
   socket.emit('user changed channel', "General");
 
   $(document).on('click', '.channel', (e)=>{
@@ -78,6 +79,12 @@ $(document).ready(() => {
   socket.on("get online users", (onlineUsers) => {
     for (username in onlineUsers) {
       $(".users-online").append(`<div class="user-online">${username}</div>`);
+    }
+  });
+
+  socket.on("get all channels", (allChannels) => {
+    for (channel in allChannels) {
+      $(".channels").append(`<div class="channel">${channel}</div>`);
     }
   });
 
